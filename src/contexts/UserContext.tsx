@@ -10,7 +10,7 @@ interface User {
 }
 
 export interface UserContextDataProps {
-  user: User | null;
+  user: User;
   setUser: Dispatch<SetStateAction<User>>;
 }
 
