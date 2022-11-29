@@ -1,9 +1,15 @@
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { MdShoppingBasket } from 'react-icons/md';
 
 import Logo from '../../assets/logo.png';
 import Avatar from '../../assets/avatar.png';
 
+import { useUser } from '../../hooks/useUser';
+
 export function Header() {
+  const { setUser } = useUser();
+
   const menuItems = [
     { name: 'Home' },
     { name: 'Menu' },
@@ -11,14 +17,27 @@ export function Header() {
     { name: 'Services' },
   ];
 
+  function login() {
+    const userFakeTeste = {
+      displayName: 'Wesley Wisch',
+      email: 'wesley_wisch@hotmail.com',
+      photoURL: 'https://github.com/wesleywisch.png',
+      providerId: 'Google.com',
+      uid: '7427483269bfjsdjlbfkjb238y482',
+    }
+
+    setUser(userFakeTeste);
+    console.log('Fazer essa funcionalidade')
+  }
+
   return (
     <header className="fixed z-50 w-screen p-6 px-16">
       {/* Desktop & table  */}
       <div className="hidden md:flex w-full h-full items-center justify-between">
-        <div className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <img className="w-8 object-cover" src={Logo} alt="Logo" />
           <p className="text-headingColor text-xl font-bold">City</p>
-        </div>
+        </Link>
 
         <div className="flex items-center gap-8">
           <ul className="flex items-center gap-8">
@@ -42,11 +61,15 @@ export function Header() {
             </div>
           </div>
 
-          <img
-            className="w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-xl"
-            src={Avatar}
-            alt="Imagem do usuário"
-          />
+          <div className="relative">
+            <motion.img
+              whileTap={{ scale: 0.6 }}
+              className="w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-xl cursor-pointer"
+              src={Avatar}
+              alt="Imagem do usuário"
+              onClick={login}
+            />
+          </div>
         </div>
       </div>
 
