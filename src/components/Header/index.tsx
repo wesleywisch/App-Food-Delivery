@@ -114,6 +114,7 @@ export function Header() {
               >
                 {user && user.admin === true && (
                   <Link
+                    onClick={() => setIsMenu(false)}
                     to='/createItem'
                     className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all duration-100 ease-in-out text-textColor text-base"
                   >
@@ -174,6 +175,7 @@ export function Header() {
             >
               {user && user.admin === true && (
                 <Link
+                  onClick={() => setIsMenu(false)}
                   to='/createItem'
                   className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all duration-100 ease-in-out text-textColor text-base"
                 >
@@ -184,6 +186,7 @@ export function Header() {
               <ul className="flex flex-col">
                 {menuItems.map((item, key) => (
                   <li
+                    onClick={() => setIsMenu(false)}
                     key={key}
                     className="text-base text-textColor hover:bg-slate-100 duration-100 transition-all ease-in-out cursor-pointer px-4 py-2"
                   >
