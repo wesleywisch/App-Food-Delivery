@@ -122,6 +122,7 @@ export function Header() {
                 )}
                 <p
                   className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all duration-100 ease-in-out text-textColor text-base"
+                  onClick={logout}
                 >
                   Logout <MdLogout />
                 </p>
@@ -134,6 +135,16 @@ export function Header() {
 
       {/* Mobile */}
       <div className="flex items-center justify-between md:hidden w-full h-full">
+        <div className="relative flex items-center justify-center">
+          <MdShoppingBasket
+            className="text-textColor text-2xl cursor-pointer"
+          />
+
+          <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center">
+            <p className="text-xs text-white font-semibold">2</p>
+          </div>
+        </div>
+
         <Link to="/" className="flex items-center gap-2">
           <img className="w-8 object-cover" src={Logo} alt="Logo" />
           <p className="text-headingColor text-xl font-bold">City</p>
