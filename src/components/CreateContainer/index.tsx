@@ -6,33 +6,152 @@ import {
   MdFoodBank,
   MdAttachMoney,
 } from "react-icons/md";
+import { AiOutlineFileText, AiOutlineArrowUp } from 'react-icons/ai';
 import { motion } from "framer-motion";
 
 import { categories } from "./categories";
 
 import { Loading } from "../Loading";
+import { heroData } from "../../utils/HeroData";
 
 export function CreateContainer() {
   const [title, setTitle] = useState('');
   const [calories, setCalories] = useState('');
   const [price, setPrice] = useState('');
   const [category, setCategory] = useState('');
-  const [imageAsset, setImageAsset] = useState(null);
+  const [imageAsset, setImageAsset] = useState('');
   const [fields, setFields] = useState(false);
   const [alertStatus, setAlertStatus] = useState('danger');
-  const [msg, setMsg] = useState(null);
+  const [msg, setMsg] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [desc, setDesc] = useState('');
+  const [amount, setAmount] = useState('');
 
-  function handleUploadImage() {
+  function handleUploadImage(e: any) {
+    setIsLoading(true);
 
+    const imageFile = e.target.files[0];
+
+    try {
+      // Aqui conectar ao banco de dados e realmente fazer o upload da imagem.
+      const uploadImgInDatabase = `Images/${Date.now()}-${imageFile.name}`;
+
+      // aqui realizar toda a questão para fazer o upload da imagem.
+
+      // ai dando tudo certo é so salvar nos estados.
+      setImageAsset('http://pat.feldman.com.br/wp-content/uploads/2012/01/comida-caseira.jpg');
+      setFields(true);
+      setMsg('Image uploaded successfully');
+      setAlertStatus('success');
+      setIsLoading(false);
+
+      setTimeout(() => {
+        setFields(false);
+      }, 4000);
+
+    } catch (err) {
+      console.log(err);
+      setFields(true);
+      setMsg('Error while uploading : Try Again');
+      setAlertStatus('danger');
+
+      setTimeout(() => {
+        setFields(false);
+        setIsLoading(false);
+      }, 4000)
+    };
   }
 
   function handleDeleteImage() {
+    setIsLoading(true);
 
+    try {
+      // aqui fazer a parte de deletar a img do banco de dados.
+      const deleteUploadImgInDatabase = 'Delete';
+
+      // ai se der tudo certo so salvar nos estados.
+      setImageAsset('');
+      setFields(true);
+      setMsg('Image deleted successfully');
+      setAlertStatus('success');
+      setIsLoading(false);
+
+      setTimeout(() => {
+        setFields(false);
+      }, 4000);
+    } catch (err) {
+      console.log(err);
+      setFields(true);
+      setMsg('Error deleting image : Try Again');
+      setAlertStatus('danger');
+
+      setTimeout(() => {
+        setFields(false);
+        setIsLoading(false);
+      }, 4000)
+    }
   }
 
   function handleSaveDetails() {
+    setIsLoading(true);
 
+    try {
+      if (!title || !calories || !imageAsset || !price || !category) {
+        setFields(true);
+        setMsg("Required fields can't be empty");
+        setAlertStatus('danger');
+
+        setTimeout(() => {
+          setFields(false);
+          setIsLoading(false);
+        }, 4000);
+      } else {
+        const data = {
+          id: `${Date.now()}`,
+          name: title,
+          imgSrc: imageAsset,
+          category: category,
+          calories: calories,
+          amount: 1,
+          price: price,
+          desc: desc,
+        };
+
+        // aqui também salvar no banco de dados.
+        heroData.push(data);
+
+        // ai se der certo somente salvar nos estados.
+        setFields(true);
+        setMsg('Data uploaded successfully');
+        setAlertStatus('success');
+        setIsLoading(false);
+        clearData();
+
+        setTimeout(() => {
+          setFields(false);
+        }, 4000);
+      }
+    } catch (err) {
+      console.log(err);
+      setFields(true);
+      setMsg('Error while uploading : Try Again');
+      setAlertStatus('danger');
+
+      setTimeout(() => {
+        setFields(false);
+        setIsLoading(false);
+      }, 4000)
+    }
+  }
+
+  function clearData() {
+    setTitle('');
+    setImageAsset('');
+    setCalories('');
+    setPrice('');
+    setCategory('');
+    setDesc('');
+    setAmount('');
   }
 
   return (
@@ -107,7 +226,7 @@ export function CreateContainer() {
                 :
                 <div className="relative h-full">
                   <img
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover rounded-lg"
                     src={imageAsset}
                     alt="Uploaded image"
                   />
@@ -125,7 +244,7 @@ export function CreateContainer() {
           )}
         </div>
 
-        <div className="w-full flex flex-col md:flex-row items-center gap-3">
+        <div className="w-full flex flex-col items-center gap-3">
           <div className="w-full py-2 border-b border-gray-300 flex items-center gap-2">
             <MdFoodBank className="text-gray-700 text-2xl" />
 
@@ -151,15 +270,49 @@ export function CreateContainer() {
               className="w-full h-full text-lg bg-transparent outline-none border-none placeholder:text-gray-400 text-textColor"
             />
           </div>
+
+          <div className="w-full py-2 border-b border-gray-300 flex items-center gap-2">
+            <AiOutlineFileText className="text-gray-700 text-2xl" />
+
+            <input
+              type="text"
+              required
+              value={desc}
+              onChange={e => setDesc(e.target.value)}
+              placeholder="Description"
+              className="w-full h-full text-lg bg-transparent outline-none border-none placeholder:text-gray-400 text-textColor"
+            />
+          </div>
+
+          <div className="w-full py-2 border-b border-gray-300 flex items-center gap-2">
+            <AiOutlineArrowUp className="text-gray-700 text-2xl" />
+
+            <input
+              type="text"
+              required
+              value={amount}
+              onChange={e => setAmount(e.target.value)}
+              placeholder="Amount"
+              className="w-full h-full text-lg bg-transparent outline-none border-none placeholder:text-gray-400 text-textColor"
+            />
+          </div>
         </div>
 
-        <div className="flex items-center w-full">
+        <div className="flex flex-col md:flex-row items-center justify-between w-full gap-2">
           <button
             type="button"
             onClick={handleSaveDetails}
-            className="ml-0 md:ml-auto w-full md:w-auto border-none outline-none bg-emerald-500 px-12 py-2 rounded-lg text-lg text-white font-semibold"
+            className="ml-0 w-full md:w-auto border-none outline-none bg-emerald-500 px-12 py-2 rounded-lg text-lg text-white font-semibold"
           >
             Save
+          </button>
+
+          <button
+            type="button"
+            onClick={clearData}
+            className="ml-0 md:ml-auto w-full md:w-auto border-none outline-none bg-red-500 px-12 py-2 rounded-lg text-lg text-white font-semibold"
+          >
+            Delete
           </button>
         </div>
       </div>
