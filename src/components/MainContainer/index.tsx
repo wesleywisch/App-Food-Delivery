@@ -5,6 +5,7 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { HomeContainer } from "../HomeContainer";
 import { RowContainer } from "../RowContainer";
 import { MenuContainer } from "../MenuContainer";
+import { Cart } from "../Cart";
 
 // Database fake enquanto não conecto no banco de dados.
 import { FoodsItemsDatabase } from '../../utils/FoodsItemsDatabase';
@@ -49,6 +50,8 @@ export function MainContainer() {
       </section>
 
       <MenuContainer />
+
+      <Cart />
     </div>
   )
 }

@@ -38,7 +38,7 @@ export function MenuContainer() {
         <div className="w-full">
           <RowContainer
             flag={false}
-            data={FoodsItemsDatabase.filter(i => i.category == filterCategory)}
+            data={FoodsItemsDatabase.filter(i => i.category === filterCategory)}
           />
         </div>
       </div>
