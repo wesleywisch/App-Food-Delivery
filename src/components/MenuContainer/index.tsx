@@ -3,6 +3,10 @@ import { motion } from 'framer-motion';
 import { IoFastFood } from 'react-icons/io5';
 
 import { categories } from '../../utils/categories';
+import { RowContainer } from '../RowContainer';
+
+// Database fake enquanto não conecto no banco de dados.
+import { FoodsItemsDatabase } from '../../utils/FoodsItemsDatabase';
 
 export function MenuContainer() {
   const [filterCategory, setFilterCategory] = useState('chicken');
@@ -29,6 +33,13 @@ export function MenuContainer() {
               <p className={`text-sm ${filterCategory === category.urlParamName ? 'text-white' : 'text-textColor'} group-hover:text-white`}>{category.name}</p>
             </motion.div>
           ))}
+        </div>
+
+        <div className="w-full">
+          <RowContainer
+            flag={false}
+            data={FoodsItemsDatabase.filter(i => i.category == filterCategory)}
+          />
         </div>
       </div>
     </section>
