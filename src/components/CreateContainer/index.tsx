@@ -9,7 +9,7 @@ import {
 import { AiOutlineFileText, AiOutlineArrowUp } from 'react-icons/ai';
 import { motion } from "framer-motion";
 
-import { categories } from "./categories";
+import { categories } from "../../utils/categories";
 
 import { Loading } from "../Loading";
 import { heroData } from "../../utils/HeroData";

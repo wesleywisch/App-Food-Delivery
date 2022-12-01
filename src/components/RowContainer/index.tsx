@@ -33,13 +33,13 @@ export function RowContainer({ flag, data, scrollValue }: RowContainerProps) {
     >
 
       {data && data.map((item, key) => (
-        <div key={key} className="w-300 h-[225px] min-w-[300px] md:w-340 md:min-w-[340px] bg-cardOverlay rounded-lg p-2 my-12 backdrop-blur-lg hover:drop-shadow-lg duration-500 flex flex-col items-center justify-between">
+        <div key={key} className="w-275 h-[175px] min-w-[275px] md:w-300 md:min-w-[300px] bg-cardOverlay rounded-lg py-2 px-4 my-12 backdrop-blur-lg hover:drop-shadow-lg duration-500 flex flex-col items-center justify-evenly relative">
           <div className="w-full flex items-center justify-between">
             <motion.img
               whileHover={{ scale: 1.2 }}
               src={item.imgSrc}
               alt={item.name}
-              className="w-40 h-40 -mt-8 drop-shadow-2xl object-contain"
+              className="w-32 h-32 -mt-8 drop-shadow-2xl object-contain"
             />
 
             <motion.div
