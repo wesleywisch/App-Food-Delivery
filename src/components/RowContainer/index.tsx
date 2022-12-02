@@ -1,7 +1,10 @@
 import { useEffect, useRef } from "react";
 import { motion } from 'framer-motion';
+import { MdShoppingBasket, MdDownloadDone } from "react-icons/md";
 
 import NotFound from '../../assets/NotFound.svg';
+
+import { useCart } from "../../hooks/useCart";
 
 interface RowContainerProps {
   flag: boolean;
@@ -19,6 +22,8 @@ interface RowContainerProps {
 }
 
 export function RowContainer({ flag, data, scrollValue }: RowContainerProps) {
+  const { handleAddItemInCart, handleDeleteItemInCart, cartItems } = useCart();
+
   const rowContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -52,6 +57,24 @@ export function RowContainer({ flag, data, scrollValue }: RowContainerProps) {
                   className="w-full h-full object-contain"
                 />
               </motion.div>
+
+              {cartItems.find(i => i.id === item.id) ? (
+                <motion.div
+                  whileTap={{ scale: 0.75 }}
+                  className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center cursor-pointer hover:shadow-md -mt-8"
+                  onClick={() => handleDeleteItemInCart(item)}
+                >
+                  <MdDownloadDone className="text-white" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  whileTap={{ scale: 0.75 }}
+                  className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center cursor-pointer hover:shadow-md -mt-8"
+                  onClick={() => handleAddItemInCart(item)}
+                >
+                  <MdShoppingBasket className="text-white" />
+                </motion.div>
+              )}
             </div>
 
             <div className="w-full flex flex-col items-end justify-end -mt-8">
