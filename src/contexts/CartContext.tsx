@@ -49,13 +49,15 @@ export function CartContextProvider({ children }: { children: React.ReactNode })
   });
 
   useEffect(() => {
-    if (cartItems.length > 1) {
+    if (cartItems.length > -1) {
       setDataInLocalStorage('cart', cartItems);
     }
   }, [cartItems]);
 
   function handleAddItemInCart(item: CartProps) {
     if (item) {
+      item.amount = 1;
+
       setCartItems([...cartItems, item]);
       return 'Item adicionado com sucesso!';
     }
@@ -73,6 +75,8 @@ export function CartContextProvider({ children }: { children: React.ReactNode })
 
     return 'Não foi possível deletar o item';
   }
+
+  function handleUpdateQuantity(item: CartProps, action: 'add' | 'remove') { }
 
   return (
     <UserContext.Provider value={{
