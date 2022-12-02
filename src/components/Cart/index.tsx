@@ -2,12 +2,20 @@ import { motion } from 'framer-motion';
 import { MdOutlineKeyboardBackspace } from 'react-icons/md';
 import { RiRefreshFill } from 'react-icons/ri';
 import { BiMinus, BiPlus } from 'react-icons/bi';
+import { useCart } from '../../hooks/useCart';
 
 export function Cart() {
+  const { setShowCart, showCart } = useCart();
+
   return (
-    <div className="fixed top-0 right-0 w-full md:w-375 h-screen bg-white drop-shadow-md flex flex-col z-[50]">
+    <motion.div
+      initial={{ opacity: 0, x: 200 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 200 }}
+      className="fixed top-0 right-0 w-full md:w-375 h-screen bg-white drop-shadow-md flex flex-col z-[50]"
+    >
       <div className="w-full flex items-center justify-between p-4">
-        <motion.div whileTap={{ scale: 0.75 }}>
+        <motion.div whileTap={{ scale: 0.75 }} onClick={() => setShowCart(!showCart)}>
           <MdOutlineKeyboardBackspace className="text-textColor text-3xl cursor-pointer" />
         </motion.div>
 
@@ -79,6 +87,6 @@ export function Cart() {
           </motion.button>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

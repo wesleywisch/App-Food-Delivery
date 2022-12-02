@@ -7,10 +7,14 @@ import { RowContainer } from "../RowContainer";
 import { MenuContainer } from "../MenuContainer";
 import { Cart } from "../Cart";
 
+import { useCart } from "../../hooks/useCart";
+
 // Database fake enquanto não conecto no banco de dados.
 import { FoodsItemsDatabase } from '../../utils/FoodsItemsDatabase';
 
 export function MainContainer() {
+  const { showCart } = useCart();
+
   const [scrollValue, setScrollValue] = useState(0);
 
   return (
@@ -51,7 +55,9 @@ export function MainContainer() {
 
       <MenuContainer />
 
-      <Cart />
+      {showCart && (
+        <Cart />
+      )}
     </div>
   )
 }

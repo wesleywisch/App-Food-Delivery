@@ -7,9 +7,11 @@ import Logo from '../../assets/logo.png';
 import Avatar from '../../assets/avatar.png';
 
 import { useUser } from '../../hooks/useUser';
+import { useCart } from '../../hooks/useCart';
 
 export function Header() {
   const { setUser, user } = useUser();
+  const { setShowCart, showCart } = useCart();
 
   const [isMenu, setIsMenu] = useState(false);
 
@@ -80,7 +82,7 @@ export function Header() {
             ))}
           </motion.ul>
 
-          <div className="relative flex items-center justify-center">
+          <div className="relative flex items-center justify-center" onClick={() => setShowCart(!showCart)}>
             <MdShoppingBasket
               className="text-textColor text-2xl cursor-pointer"
             />
@@ -136,7 +138,7 @@ export function Header() {
 
       {/* Mobile */}
       <div className="flex items-center justify-between md:hidden w-full h-full">
-        <div className="relative flex items-center justify-center">
+        <div onClick={() => setShowCart(!showCart)} className="relative flex items-center justify-center">
           <MdShoppingBasket
             className="text-textColor text-2xl cursor-pointer"
           />
