@@ -11,7 +11,7 @@ import EmptyCart from '../../assets/emptyCart.svg';
 import { CartItem } from './CartItem';
 
 export function Cart() {
-  const { setShowCart, showCart, cartItems } = useCart();
+  const { setShowCart, showCart, cartItems, setCartItems } = useCart();
   const { user, setUser } = useUser();
 
   const [totalPrice, setTotalPrice] = useState(0);
@@ -57,6 +57,7 @@ export function Cart() {
         <motion.p
           whileTap={{ scale: 0.75 }}
           className="flex items-center gap-2 p-1 px-2 my-2 bg-gray-100 rounded-md hover:shadow-md cursor-pointer text-textColor text-base"
+          onClick={() => setCartItems([])}
         >
           Clear <RiRefreshFill />
         </motion.p>

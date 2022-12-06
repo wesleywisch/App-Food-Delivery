@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { BiMinus, BiPlus } from 'react-icons/bi';
+import { MdDelete } from 'react-icons/md';
 
 import { useCart } from '../../hooks/useCart';
 
@@ -17,10 +18,10 @@ interface CartItemProps {
 }
 
 export function CartItem({ item }: CartItemProps) {
-  const { handleUpdateQuantity } = useCart();
+  const { handleUpdateQuantity, handleDeleteItemInCart } = useCart();
 
   return (
-    <div className="w-full p-1 rounded-lg bg-cartItem flex items-center gap-2">
+    <div className="w-full p-1 rounded-lg bg-cartItem flex items-center gap-2 relative">
       <img
         className="w-20 h-20 max-w-[60px] rounded-full object-contain"
         src={item.imgSrc}
@@ -43,6 +44,14 @@ export function CartItem({ item }: CartItemProps) {
           <BiPlus className="text-gray-50" onClick={() => handleUpdateQuantity(item, 'add')} />
         </motion.div>
       </div>
+
+      <motion.div
+        whileTap={{ scale: 0.75 }}
+        className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center cursor-pointer bg-red-500 p-1"
+        onClick={() => handleDeleteItemInCart(item)}
+      >
+        <MdDelete className="text-white w-full h-full" />
+      </motion.div>
     </div>
   )
 }
