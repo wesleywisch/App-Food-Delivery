@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MdOutlineKeyboardBackspace } from 'react-icons/md';
 import { RiRefreshFill } from 'react-icons/ri';
@@ -6,11 +7,22 @@ import { useCart } from '../../hooks/useCart';
 import { useUser } from '../../hooks/useUser';
 
 import EmptyCart from '../../assets/emptyCart.svg';
+
 import { CartItem } from './CartItem';
 
 export function Cart() {
   const { setShowCart, showCart, cartItems } = useCart();
   const { user, setUser } = useUser();
+
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    let totalPrice = cartItems.reduce(function (acc, item) {
+      return acc + item.amount * Number(item.price);
+    }, 0);
+
+    setTotalPrice(totalPrice);
+  }, [cartItems]);
 
   function login() {
     if (!user?.displayName) {
@@ -68,7 +80,7 @@ export function Cart() {
           <div className="w-full flex-1 bg-cartTotal rounded-t-[2rem] flex flex-col items-center justify-evenly px-8 py-2">
             <div className="w-full flex items-center justify-between">
               <p className="text-gray-400 text-lg">Sub total:</p>
-              <p className="text-gray-400 text-lg">$ 8.5</p>
+              <p className="text-gray-400 text-lg">$ {totalPrice}</p>
             </div>
 
             <div className="w-full flex items-center justify-between">
@@ -80,7 +92,7 @@ export function Cart() {
 
             <div className="w-full flex items-center justify-between">
               <p className="text-gray-200 text-xl font-semibold">Total</p>
-              <p className="text-gray-200 text-xl font-semibold">$ 11</p>
+              <p className="text-gray-200 text-xl font-semibold">$ {totalPrice + 2.5}</p>
             </div>
 
             {user && user.displayName ? (

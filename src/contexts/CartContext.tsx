@@ -18,6 +18,7 @@ export interface CartContextDataProps {
   setShowCart: Dispatch<SetStateAction<boolean>>;
   handleAddItemInCart: (item: CartProps) => null | string;
   handleDeleteItemInCart: (item: CartProps) => null | string;
+  handleUpdateQuantity: (item: CartProps, action: 'add' | 'remove') => null | string;
 }
 
 export const UserContext = createContext({} as CartContextDataProps);
@@ -76,7 +77,42 @@ export function CartContextProvider({ children }: { children: React.ReactNode })
     return 'Não foi possível deletar o item';
   }
 
-  function handleUpdateQuantity(item: CartProps, action: 'add' | 'remove') { }
+  function handleUpdateQuantity(item: CartProps, action: 'add' | 'remove') {
+    if (action === 'add') {
+      const updatedCart = [...cartItems];
+      const productExists = updatedCart.find(product => product.id === item.id);
+
+      if (productExists) {
+        productExists.amount += 1;
+        setCartItems(updatedCart);
+      } else {
+        throw Error();
+      }
+    }
+
+    if (action === 'remove') {
+      const product = cartItems.find(i => i.id === item.id);
+
+      if (product?.amount === 0) {
+        return null;
+      }
+
+      if (product) {
+        const updatedCart = [...cartItems];
+        const productExists = updatedCart.find(product => product.id === item.id);
+
+        if (productExists) {
+          productExists.amount -= 1;
+          setCartItems(updatedCart);
+        } else {
+          throw Error();
+        }
+        return 'Quantidade alterada com sucesso';
+      }
+    }
+
+    return null;
+  }
 
   return (
     <UserContext.Provider value={{
@@ -86,6 +122,7 @@ export function CartContextProvider({ children }: { children: React.ReactNode })
       setShowCart,
       handleAddItemInCart,
       handleDeleteItemInCart,
+      handleUpdateQuantity
     }}>
       {children}
     </UserContext.Provider>
