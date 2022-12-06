@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
@@ -6,10 +7,15 @@ import { MainContainer } from './components/MainContainer';
 import { CreateContainer } from './components/CreateContainer';
 
 import { CartContextProvider } from './contexts/CartContext';
+import { FormLogin } from './components/FormLogin';
 
 function App() {
+  const [showModal, setShowModal] = useState(true);
+
   return (
     <AnimatePresence>
+      <FormLogin showModal={showModal} setShowModal={setShowModal} />
+
       <div className="w-screen h-auto flex flex-col bg-primary">
         <CartContextProvider>
           <Header />
